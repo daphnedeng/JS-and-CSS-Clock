@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JS + CSS Clock</title>
 </head>
 <body>
@@ -68,8 +67,7 @@
       box-shadow: 0px 0px 15px 0px rgba(255,255,255,0.3);
       transform-origin: 100%;
       transform: rotate(90deg);
-      transition: all 0.05s;
-      transition-timing-function: cubic-bezier(0.82, 2.85, 0.75, 1.01);
+      transition: all 0.05s cubic-bezier(0.82, 2.85, 0.75, 1.01);
     }
 
     .hour-hand {
@@ -95,6 +93,12 @@
       //update the transform of secondHand
       secondHand.style.transform = `rotate(${secondDegrees}deg)`;
 
+      //temporarily disable transition to control the weird movement, and restore it.
+      if (secondDegrees >= 444) {
+        secondHand.style.transition = 'none';
+      } else if (secondDegrees > 90) {
+        secondHand.style.transition = 'all 0.05s cubic-bezier(0.82, 2.85, 0.75, 1.01)';
+      }
 
       //get minutes
       const minutes = date.getMinutes();
